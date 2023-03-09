@@ -11,8 +11,6 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 
 
-
-
 devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(
     IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
@@ -24,8 +22,8 @@ minRange,maxRange = range[0],range[1]
 
 
 camh= 1000
-camw = 450
-
+camw = 1000
+dist = 0
 
 
 
@@ -42,6 +40,24 @@ def main():
         suc, img = cap.read()
         img = detector.find_hands(img ,draw=False)
         li = detector.find_postion(img,draw=False)
+        #################################
+        ###########wrining percenage#####
+
+        dist=17
+
+        #cv2.putText(img, f"{int(vol_percent)}%", (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+
+        ########### drawing rectangle ######
+        cv2.rectangle(img,(10,80),(30,350),(255,255,0),3)
+
+
+        ########### drawing percentage ######
+        vol_level = volume.GetMasterVolumeLevel()
+        vol_level_percent = np.interp(vol_level,[minRange,maxRange],[0,100])
+        cv2.putText(img, f"Volume:{int(vol_level_percent)}%", (10, 450), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+
+
+
         if li:
 
 
@@ -68,7 +84,13 @@ def main():
             vol= np.interp(dist,[17,170],[minRange,maxRange])
             print(vol)
             volume.SetMasterVolumeLevel(vol, None)
-            #cv2.rectangle(img, )
+            ############# changing percent ##############
+            vol_percent = np.interp(dist, [17, 170], [0, 100])
+            cv2.putText(img, f"{int(vol_percent)}%", (10, 400), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
+
+            ############# changing rectangle ##############
+            y = np.interp(dist, [17, 170], [346, 84])
+            cv2.rectangle(img,  (26, 346),(14, int(y)), (255, 0, 255), cv2.FILLED)
 
 
 
