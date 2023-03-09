@@ -4,13 +4,13 @@ import mediapipe as mp
 
 
 class HandDetector():
-    def __init__(self):
+    def __init__(self,det_c=0.5, trac_c=0.5, hands=1):
 
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(static_image_mode=True,
-                      max_num_hands=2,
-                      min_detection_confidence=0.3,
-                      min_tracking_confidence=0.3)
+                      max_num_hands=hands,
+                      min_detection_confidence=det_c,
+                      min_tracking_confidence=trac_c)
         self.mpDraw = mp.solutions.drawing_utils
 
     def find_hands(self,img,draw=True):
@@ -42,34 +42,3 @@ class HandDetector():
 
 
 
-def main():
-    cap = cv2.VideoCapture(0)
-    detector = HandDetector()
-    cTime = 0
-    pTime = 0
-    while True:
-        suc, img = cap.read()
-        img = detector.find_hands(img ,draw=False)
-        li = detector.find_postion(img)
-        if li: print(li[0])
-
-
-
-
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
-        cv2.putText(img, str(int(fps)), (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3)
-
-        cv2.imshow("Image", img)
-
-        cv2.waitKey(1)
-
-
-
-
-
-
-
-if __name__ =="__main__":
-    main()
