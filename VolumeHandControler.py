@@ -31,7 +31,7 @@ def main():
     cap = cv2.VideoCapture(0)
     cap.set(4,camh)
     cap.set(3,camw)
-    detector = HandDetector()
+    detector = HandDetector(det_c=0.7,trac_c=0.7)
     cTime = 0
     pTime = 0
     volumeMode = False

@@ -1,6 +1,7 @@
 import time
 import cv2
 import mediapipe as mp
+import math
 
 
 class HandDetector():
@@ -33,8 +34,15 @@ class HandDetector():
                 lmlist.append((id,cx,cy))
                 if draw:
                     cv2.circle(img, (cx,cy),15,(255,0,255),cv2.FILLED)
+                self.lmList=lmlist
+            return self.lmList
+    def find_dist(self, index_1,index_2):
+        x1, y1 = self.lmList[index_1][1], self.lmList[index_1][2]
+        x2, y2 = self.lmList[index_2][1], self.lmList[index_2][2]
+        dist = math.hypot((x2 - x1), (y2 - y1))
+       # dist2 = math.sqrt((x2 - x1)**2+(y2 - y1)**2)
+        return dist
 
-            return lmlist
 
 
 
