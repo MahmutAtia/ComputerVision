@@ -8,7 +8,11 @@ def get_point(e,x,y,flags,prams):
 
 w,h = (158-51),(194-147) #width and height for parking place
 
-rectangle_list = []
+try:
+    with open("parkinlist.pkl","rb") as file:
+        rectangle_list = pickle.open(file)
+except:
+    rectangle_list = []
 def draw_parking_place(e,x,y,flags,prams):
     if e == cv2.EVENT_LBUTTONDOWN:
         p1 = (x,y)
