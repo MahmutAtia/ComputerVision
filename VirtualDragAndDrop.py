@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-from handTracker import HandDetector
-import math
+from HandTracker.handTracker import HandDetector
+
 
 class rect:
     def __init__(self, posCenter, size = (200,200)):

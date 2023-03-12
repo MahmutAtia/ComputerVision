@@ -1,7 +1,7 @@
 import cv2
-from handTracker import HandDetector
+from HandTracker.handTracker import HandDetector
 import numpy as np
-import matplotlib.pyplot as plt
+
 ##################################
 x = [214,114,95,86,70,62,56,51,47]
 y = [20,36,45.5,53.5,60,67,73.5,81.5,90]

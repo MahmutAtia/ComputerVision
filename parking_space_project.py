@@ -10,7 +10,7 @@ w,h = (158-51),(194-147) #width and height for parking place
 
 try:
     with open("parkinlist.pkl","rb") as file:
-        rectangle_list = pickle.open(file)
+        rectangle_list = pickle.load(file)
 except:
     rectangle_list = []
 def draw_parking_place(e,x,y,flags,prams):

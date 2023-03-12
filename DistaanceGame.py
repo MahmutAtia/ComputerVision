@@ -1,5 +1,5 @@
 import cv2
-from handTracker import HandDetector
+from HandTracker.handTracker import HandDetector
 import numpy as np
 import random
 import time

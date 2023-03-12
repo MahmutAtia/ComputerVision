@@ -34,14 +34,43 @@ class HandDetector():
                 lmlist.append((id,cx,cy))
                 if draw:
                     cv2.circle(img, (cx,cy),15,(255,0,255),cv2.FILLED)
-                self.lmList=lmlist
-            return self.lmList
+                self.lmlist=lmlist
+            return self.lmlist
     def find_dist(self, index_1,index_2):
-        x1, y1 = self.lmList[index_1][1], self.lmList[index_1][2]
-        x2, y2 = self.lmList[index_2][1], self.lmList[index_2][2]
+        x1, y1 = self.lmlist[index_1][1], self.lmlist[index_1][2]
+        x2, y2 = self.lmlist[index_2][1], self.lmlist[index_2][2]
         dist = math.hypot((x2 - x1), (y2 - y1))
        # dist2 = math.sqrt((x2 - x1)**2+(y2 - y1)**2)
         return dist
+
+
+    def find_hand_type(self):
+        hands_type = []
+        for hand in self.results.multi_handedness:
+            hands_type.append(hand.classification[0].label)
+        return hands_type
+    def get_one_hand_fingers_tips(self):
+        fingerTipList = []
+        ##hands type
+        handTypeList = self.find_hand_type()
+        # thumb
+        opened = True
+        if handTypeList[0] == "Left":
+            opened = False
+
+        if self.lmlist[4][1] < self.lmlist[4 - 1][1]:
+            fingerTipList.append(opened)
+        elif self.lmlist[4][1] > self.lmlist[4 - 2][1]:
+            fingerTipList.append(not opened)
+
+        # 4 fingers
+        for tip in [8, 12, 16, 20]:
+
+            if self.lmlist[tip][2] < self.lmlist[tip - 2][2]:
+                fingerTipList.append(True)
+            elif self.lmlist[tip][2] > self.lmlist[tip - 2][2]:
+                fingerTipList.append(False)
+        return fingerTipList
 
 
 

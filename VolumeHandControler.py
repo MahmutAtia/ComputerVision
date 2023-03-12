@@ -1,6 +1,6 @@
 import cv2
 import time
-from handTracker import HandDetector
+from HandTracker.handTracker import HandDetector
 import numpy as np
 import math
 from ctypes import cast, POINTER
